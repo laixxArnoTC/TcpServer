@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     struct sockaddr_in server_addr;
     bzero(&server_addr, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = inet_addr(INADDR_ANY); // htonl(INADDR_ANY);
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);  // inet_addr(INADDR_ANY); // htonl(INADDR_ANY);
     server_addr.sin_port = htons(4567);  // host to net unsigned short
 
     if (bind(listen_fd, (sockaddr*)&server_addr, sizeof(server_addr)) == -1)
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        printf("绑定网络端口成功\n");
+        printf("绑定网络端口成功: %d\n", listen_fd);
     }
     // 3. 监听网络端口listen
     if (listen(listen_fd, 1024) == -1)
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        printf("监听网络端口成功\n");
+        printf("监听网络端口成功: %d\n", listen_fd);
     }
     // 4. 等待接受客户端连接accept
     struct sockaddr_in client_addr;
